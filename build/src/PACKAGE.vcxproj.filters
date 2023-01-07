@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="E:\MayaGather\build\CMakeFiles\9bc846e9ca47240e852988a6427e2c0e\PACKAGE_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{4B1F0646-261E-37D3-8AAA-0B0634E36C14}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
