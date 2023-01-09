@@ -2,56 +2,40 @@
 #include <fstream>
 #include <ShlObj.h>
 #include <algorithm>
+#include <sstream>
+#include <string>
 namespace fs = std::filesystem;
-void folder::Createdir(fs::path Path)
+struct fsException : public fs::filesystem_error
 {
-    /**
-     * 异常不能非常量引用
-     * 异常不捕获基类异常
-    */
-    try
-    {
-        folder_exists(Path);
-    }
-    catch (std::exception &e)
-    {   
-        std::cout<<e.what();
-        fs::create_directory(Path);
-    }
-}
-void folder::folder_exists(const fs::path &p, fs::file_status s)
+    fsException();
+};
+ 
+fsException::fsException():fs::filesystem_error(std::string{""},std::error_code{}){};
+
+bool MayaGather::folder::folderExists(const fs::path &in_path)
 {
-    std::cout << p;
-    if (fs::status_known(s) ? fs::exists(s) : fs::exists(p))
-        std::cout << "exists\n";
-    else /// 不抛出基本异常
-        throw std::exception{"does not exists\n"};
+    std::cout << in_path;
+    auto l_r = fs::exists(in_path);
+    return l_r;
 };
 
-
-void folder::Copyfile(const fs::path& from,const fs::path& to){
- const auto copyOptions=std::filesystem::copy_options::update_existing
-                          |std::filesystem::copy_options::recursive
-                          ;
-                          /// 不捕获任何异常
-    try{
-        fs::copy(from,to,copyOptions);
-    }
-    catch(fs::filesystem_error const& ex){
-        std::cout<<"what():"<<ex.what()<<'\n';
-        
-    }
-   
+void MayaGather::folder::copyFile(const fs::path &in_from, const fs::path &in_to)
+{
+    const auto copyOptions = std::filesystem::copy_options::update_existing | std::filesystem::copy_options::recursive;
+    fs::copy(in_from, in_to, copyOptions);
 }
-fs::path folder::getDocumentPath(){
+fs::path MayaGather::folder::getDocumentPath()
+{
     /// 这里我们手动做一些工作
     /// 获取环境变量 FOLDERID_Documents
     PWSTR pManager;
     SHGetKnownFolderPath(FOLDERID_Documents, NULL, nullptr, &pManager);
     auto k_path = fs::path{pManager};
-    /// 多复制了一次
-    auto dir=fs::path(k_path)/"Maya"/"rigTool";
     CoTaskMemFree(pManager);
-    return dir;
+    return k_path;
 }
-
+void MayaGather::folder::setMel(std::string& in_name,std::filesystem::path& in_directory,std::string& in_content){
+    fs::create_directories(in_directory);
+    std::ofstream ostrm(in_directory/in_name,std::ios::out); 
+    ostrm<<in_content;
+}

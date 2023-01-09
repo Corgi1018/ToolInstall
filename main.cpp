@@ -1,17 +1,75 @@
 #include <iostream>
 #include <filesystem>
 #include <cstdlib>
+#include <sstream>
+#include <string>
 #include "src/file.h"
-int main(int, char **)
-{
-    folder f;
-    const std::filesystem::path fromPath{"//192.168.10.240/public/mygwaibao2/Tool/share"};
-    const std::filesystem::path toPath=f.getDocumentPath();
+void installShare(){
+
+    MayaGather::folder f;
+    std::filesystem::path fromPath{"//192.168.10.240/public/mygwaibao2/Tool/share"};
+    std::filesystem::path toPath=f.getDocumentPath() / "Maya" / "share";
+    std::filesystem::path InDirectory=f.getDocumentPath()/"maya"/"2018"/"zh_CN"/"prefs"/"shelves";
+    std::string fileName{"shelf_Share.mel"};
+    std::string rig_header=R"(
+    global proc shelf_Share () {
+
+
+        shelfButton
+            -enableCommandRepeat 1
+            -enable 1
+            -width 21
+            -height 21
+            -manage 1
+            -visible 1
+            -preventOverride 0
+            -annotation "User Script" 
+            -enableBackground 0
+            -backgroundColor 0 0 0 
+            -highlightColor 0.321569 0.521569 0.65098 
+            -align "center" 
+            -label "install" 
+            -labelOffset 0
+            -rotation 0
+            -flipX 0
+            -flipY 0
+            -useAlpha 1
+            -font "plainLabelFont" 
+            -overlayLabelColor 0.8 0.8 0.8 
+            -overlayLabelBackColor 0 0 0 0.5 
+            -image "activeSelectedAnimLayer.png" 
+            -image1 "activeSelectedAnimLayer.png" 
+            -style "iconOnly" 
+            -marginWidth 1
+            -marginHeight 1
+    )";
+
+    std::stringstream rig_path;
+    rig_path<<toPath;
+    std::string rig_command_path=rig_path.str();
+    rig_command_path.erase(remove( rig_command_path.begin(), rig_command_path.end(), '\"' ),rig_command_path.end());;
+    std::stringstream rig_command;
+    rig_command<<R"(
+            -command "import maya.cmds as cmds\nimport sys\nimport maya.mel as mel\nsys.path.append(r')";
+    rig_command<<rig_command_path;
+    rig_command<<"\'\)";
+    rig_command<<R"(\nimport systemUpdate.project_UpdateWin_gz as puw ;reload(puw)\nqqq = puw.mainUpdateWins()\nqqq._mianWins())";
+    rig_command<<"\"";
+
+    std::string rig_end=R"(
+            -sourceType "python" 
+            -commandRepeatable 1
+            -flat 1
+        ;
+    }
+    )";
+    std::string InContent=rig_header+rig_command.str()+rig_end;
+    f.setMel(fileName,InDirectory,InContent);
     std::cout<<"path:"<<toPath<<'\n';
-    f.Createdir(toPath);
     const auto copyOptions = std::filesystem::copy_options::update_existing | std::filesystem::copy_options::recursive;
     try
     {
+        std::filesystem::create_directories(toPath);
         std::filesystem::copy(fromPath, toPath, copyOptions);
     }
     catch (std::filesystem::filesystem_error const &ex)
@@ -19,5 +77,16 @@ int main(int, char **)
         std::cout << "what():" << ex.what() << '\n';
     }
 
+}
+
+void installRigtool(){
+    MayaGather::folder f;
+    std::filesystem::path fromPath{"//192.168.10.240/public/mygwaibao2/Tool/rigTool"};
+    std::filesystem::path toPath=f.getDocumentPath() / "Maya" / "rigTool";
+
+}
+int main(int, char **)
+{
+   installShare();
 }
 

@@ -1,20 +1,16 @@
 #include <iostream>
 #include <filesystem>
-
+#include <fstream>
  
-/**
- * 类不要在根名称空间下
- * 函数命名要求
- * 形参命名要求（in，out）
- * 
-*/
-namespace mayaGather{
-    class folder {
+namespace MayaGather{
+class folder {
+    
     public:
-    void Createdir(std::filesystem::path Path);
-    void Copyfile(const std::filesystem::path& from,const std::filesystem::path& to);
-    void folder_exists(const std::filesystem::path&p,const std::filesystem::file_status& s=std::filesystem::file_status{});
+    void setMel(std::string& in_name,std::filesystem::path& in_directory,std::string& in_content);
+    void createDir(std::filesystem::path& in_path);
+    void copyFile(const std::filesystem::path& in_from,const std::filesystem::path& in_to);
+    bool folderExists(const std::filesystem::path&in_path);
     std::filesystem::path getDocumentPath();
     private:
-    }
+    };
 };
