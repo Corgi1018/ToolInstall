@@ -1,0 +1,42 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+      "major": 3,
+      "minor": 20,
+      "patch": 0
+    },
+    "configurePresets": [
+      {
+        "name": "ninja-multiconfiguration-vcpkg",
+        "displayName": "Ninja",
+        "description": "Ninja build using vcpkg",
+        "generator": "Ninja",
+        "binaryDir": "${sourceDir}/build/${presetName}",
+        "toolchainFile": "E:/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "architecture": {
+          "value": "x64",
+          "strategy": "external"
+        },
+        "cacheVariables": {
+            "CMAKE_SYSTEM_VERSION": "10.0.22000.0",
+            "CMAKE_C_COMPILER": "cl",
+            "CMAKE_CXX_COMPILER": "cl"
+          }
+        
+    }],
+    "buildPresets": [
+        {
+          "name": "ninja-multiconfiguration-vcpkg",
+          "configurePreset": "ninja-multiconfiguration-vcpkg",
+          "displayName": "Build ninja-multiconfiguration-vcpkg",
+          "description": "Build with Ninja the configuration specified with --config"
+        }
+      ],
+      "testPresets": [
+        {
+          "name": "ninja-multiconfiguration-vcpkg",
+          "configurePreset": "ninja-multiconfiguration-vcpkg",
+          "description": "Test with Ninja the provided configuration with --config"
+        }
+      ]
+}
