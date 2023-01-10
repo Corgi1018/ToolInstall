@@ -18,4 +18,5 @@ target_sources(
 #                            "${PROJECT_BINARY_DIR}" 
 #                            "${PROJECT_SOURCE_DIR}/src" 
 #                            ) 
+find_package(Boost)
 include(CPack)

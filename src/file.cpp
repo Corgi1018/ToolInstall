@@ -21,6 +21,7 @@ bool MayaGather::folder::folderExists(const fs::path &in_path)
 
 void MayaGather::folder::copyFile(const fs::path &in_from, const fs::path &in_to)
 {
+    fs::create_directories(in_to);
     const auto copyOptions = std::filesystem::copy_options::update_existing | std::filesystem::copy_options::recursive;
     fs::copy(in_from, in_to, copyOptions);
 }

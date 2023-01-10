@@ -2,7 +2,7 @@
 #include <filesystem>
 #include <cstdlib>
 #include <sstream>
-#include <string>
+#include <string> 
 #include "src/file.h"
 void installShare(){
 
@@ -66,11 +66,9 @@ void installShare(){
     std::string InContent=rig_header+rig_command.str()+rig_end;
     f.setMel(fileName,InDirectory,InContent);
     std::cout<<"path:"<<toPath<<'\n';
-    const auto copyOptions = std::filesystem::copy_options::update_existing | std::filesystem::copy_options::recursive;
     try
     {
-        std::filesystem::create_directories(toPath);
-        std::filesystem::copy(fromPath, toPath, copyOptions);
+        f.copyFile(fromPath, toPath);
     }
     catch (std::filesystem::filesystem_error const &ex)
     {
@@ -80,13 +78,32 @@ void installShare(){
 }
 
 void installRigtool(){
+
     MayaGather::folder f;
-    std::filesystem::path fromPath{"//192.168.10.240/public/mygwaibao2/Tool/rigTool"};
-    std::filesystem::path toPath=f.getDocumentPath() / "Maya" / "rigTool";
+    std::filesystem::path fromPath1{"//192.168.10.240/public/mygwaibao2/Tool/rigTool/tools_env/packages"};
+    std::filesystem::path fromPath2{"//192.168.10.240/public/mygwaibao2/Tool/rigTool/tools_env/rez"};
+    std::filesystem::path fromPath3{"//192.168.10.240/public/mygwaibao2/Tool/rigTool/netease_heymaker"};
+    std::filesystem::path userPath = getenv("USERPROFILE");
+    std::cout<<"userprofile:"<<userPath<<std::endl;
+    std::filesystem::path toPath1=userPath /"package";
+    std::filesystem::path toPath2="D:/rez";
+    std::filesystem::path toPath3=f.getDocumentPath()/"maya"/"netease_heymaker";
+    // try
+    // {
+    //     f.copyFile(fromPath1,toPath1);
+    //     f.copyFile(fromPath2,toPath2);
+    //     f.copyFile(fromPath3,toPath3);
+    // }
+    // catch (std::filesystem::filesystem_error const &ex)
+    // {
+    //     std::cout << "what():" << ex.what() << '\n';
+    // }
+
+
 
 }
 int main(int, char **)
 {
-   installShare();
+   installRigtool();
 }
 
