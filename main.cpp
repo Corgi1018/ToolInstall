@@ -1,8 +1,10 @@
+#pragma once
 #include <iostream>
 #include <filesystem>
 #include <cstdlib>
 #include <sstream>
 #include <string> 
+#include <boost/process.hpp>
 #include "src/file.h"
 void installShare(){
 
@@ -102,8 +104,15 @@ void installRigtool(){
 
 
 }
+
 int main(int, char **)
 {
-   installRigtool();
+    namespace bp = boost::process; 
+    bp::child c("D:/rez/Scripts/rez/rez.exe");
+    c.wait();
+    int result=c.exit_code();
+    return result;
+    
+
 }
 

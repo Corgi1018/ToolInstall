@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <filesystem>
 #include <fstream>
@@ -11,6 +12,7 @@ class folder {
     void copyFile(const std::filesystem::path& in_from,const std::filesystem::path& in_to);
     bool folderExists(const std::filesystem::path&in_path);
     std::filesystem::path getDocumentPath();
+    void startThread();
     private:
     };
 };

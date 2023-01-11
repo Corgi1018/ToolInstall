@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20.0)
-# project(MayaGather_Debug VERSION 0.1.0)
-
+project(MayaGather_Debug VERSION 0.1.0)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(CTest)
 enable_testing()
 set(CMAKE_CXX_STANDARD 17)
@@ -18,5 +18,11 @@ target_sources(
 #                            "${PROJECT_BINARY_DIR}" 
 #                            "${PROJECT_SOURCE_DIR}/src" 
 #                            ) 
-find_package(Boost)
+find_package(Boost COMPONENTS
+filesystem)
+target_link_libraries (MayaGather Boost::filesystem)
+
+
+
+
 include(CPack)

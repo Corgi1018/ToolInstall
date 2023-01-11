@@ -40,3 +40,6 @@ void MayaGather::folder::setMel(std::string& in_name,std::filesystem::path& in_d
     std::ofstream ostrm(in_directory/in_name,std::ios::out); 
     ostrm<<in_content;
 }
+// void MayaGather::folder::startThread(){
+//     bp::child c("D:/rez/Scripts/rez/rez.exe", "main.cpp");
+// }
