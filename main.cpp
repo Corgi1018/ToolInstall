@@ -1,19 +1,20 @@
-#pragma once
+
 #include <iostream>
 #include <filesystem>
 #include <cstdlib>
 #include <sstream>
-#include <string> 
+#include <string>
 #include <boost/process.hpp>
 #include "src/file.h"
-void installShare(){
+void installShare()
+{
 
     MayaGather::folder f;
     std::filesystem::path fromPath{"//192.168.10.240/public/mygwaibao2/Tool/share"};
-    std::filesystem::path toPath=f.getDocumentPath() / "Maya" / "share";
-    std::filesystem::path InDirectory=f.getDocumentPath()/"maya"/"2018"/"zh_CN"/"prefs"/"shelves";
+    std::filesystem::path toPath = f.getDocumentPath() / "Maya" / "share";
+    std::filesystem::path InDirectory = f.getDocumentPath() / "maya" / "2018" / "zh_CN" / "prefs" / "shelves";
     std::string fileName{"shelf_Share.mel"};
-    std::string rig_header=R"(
+    std::string rig_header = R"(
     global proc shelf_Share () {
 
 
@@ -47,27 +48,28 @@ void installShare(){
     )";
 
     std::stringstream rig_path;
-    rig_path<<toPath;
-    std::string rig_command_path=rig_path.str();
-    rig_command_path.erase(remove( rig_command_path.begin(), rig_command_path.end(), '\"' ),rig_command_path.end());;
+    rig_path << toPath;
+    std::string rig_command_path = rig_path.str();
+    rig_command_path.erase(remove(rig_command_path.begin(), rig_command_path.end(), '\"'), rig_command_path.end());
+    ;
     std::stringstream rig_command;
-    rig_command<<R"(
+    rig_command << R"(
             -command "import maya.cmds as cmds\nimport sys\nimport maya.mel as mel\nsys.path.append(r')";
-    rig_command<<rig_command_path;
-    rig_command<<"\'\)";
-    rig_command<<R"(\nimport systemUpdate.project_UpdateWin_gz as puw ;reload(puw)\nqqq = puw.mainUpdateWins()\nqqq._mianWins())";
-    rig_command<<"\"";
+    rig_command << rig_command_path;
+    rig_command << "\')";
+    rig_command << R"(\nimport systemUpdate.project_UpdateWin_gz as puw ;reload(puw)\nqqq = puw.mainUpdateWins()\nqqq._mianWins())";
+    rig_command << "\"";
 
-    std::string rig_end=R"(
+    std::string rig_end = R"(
             -sourceType "python" 
             -commandRepeatable 1
             -flat 1
         ;
     }
     )";
-    std::string InContent=rig_header+rig_command.str()+rig_end;
-    f.setMel(fileName,InDirectory,InContent);
-    std::cout<<"path:"<<toPath<<'\n';
+    std::string InContent = rig_header + rig_command.str() + rig_end;
+    f.setMel(fileName, InDirectory, InContent);
+    std::cout << "path:" << toPath << '\n';
     try
     {
         f.copyFile(fromPath, toPath);
@@ -76,43 +78,54 @@ void installShare(){
     {
         std::cout << "what():" << ex.what() << '\n';
     }
-
 }
 
-void installRigtool(){
+void installRigtool()
+{
 
     MayaGather::folder f;
     std::filesystem::path fromPath1{"//192.168.10.240/public/mygwaibao2/Tool/rigTool/tools_env/packages"};
     std::filesystem::path fromPath2{"//192.168.10.240/public/mygwaibao2/Tool/rigTool/tools_env/rez"};
     std::filesystem::path fromPath3{"//192.168.10.240/public/mygwaibao2/Tool/rigTool/netease_heymaker"};
     std::filesystem::path userPath = getenv("USERPROFILE");
-    std::cout<<"userprofile:"<<userPath<<std::endl;
-    std::filesystem::path toPath1=userPath /"package";
-    std::filesystem::path toPath2="D:/rez";
-    std::filesystem::path toPath3=f.getDocumentPath()/"maya"/"netease_heymaker";
-    // try
-    // {
-    //     f.copyFile(fromPath1,toPath1);
-    //     f.copyFile(fromPath2,toPath2);
-    //     f.copyFile(fromPath3,toPath3);
-    // }
-    // catch (std::filesystem::filesystem_error const &ex)
-    // {
-    //     std::cout << "what():" << ex.what() << '\n';
-    // }
-
-
-
+    std::cout << "userprofile:" << userPath << std::endl;
+    std::filesystem::path toPath1 = userPath / "packages";
+    std::filesystem::path toPath2 = "D:/rez";
+    std::filesystem::path toPath3 = f.getDocumentPath() / "maya" / "netease_heymaker";
+    std::string fileName{"shelf_Rigtool.mel"};
+    try
+    {
+        f.copyFile(fromPath1,toPath1);
+        // f.copyFile(fromPath2,toPath2);
+        // f.copyFile(fromPath3,toPath3);
+    }
+    catch (std::filesystem::filesystem_error const &ex)
+    {
+        std::cout << "what():" << ex.what() << '\n';
+    }
 }
-
+auto startThread(const std::vector<std::string>& in_arg)
+{
+    boost::process::ipstream is;
+    boost::process::ipstream erro;
+    std::vector<std::string> data;
+   auto rt= boost::process::system(in_arg, boost::process::std_out > is, boost::process::std_err > erro);
+    if (!rt)
+    {
+        std::string l_line{};
+        std::getline(is, l_line);
+        data.push_back(l_line);
+    }
+    else{
+ 
+        for(std::string error;std::getline(erro,error);)
+            std::cout<<"error is:"<<error<<std::endl;
+    };
+    return data;
+};
 int main(int, char **)
 {
-    namespace bp = boost::process; 
-    bp::child c("D:/rez/Scripts/rez/rez.exe");
-    c.wait();
-    int result=c.exit_code();
-    return result;
-    
-
+    // installRigtool();
+    std::vector<std::string> in_arg{"D:/rez/Scripts/rez/rez.exe","env","wuzu","--","rez","env","numpy","maya-2018","-c","maya"};
+    startThread(in_arg);
 }
-
