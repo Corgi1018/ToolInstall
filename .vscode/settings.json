@@ -91,6 +91,8 @@
         "variant": "cpp",
         "xhash": "cpp",
         "strstream": "cpp",
-        "*.ipp": "cpp"
+        "*.ipp": "cpp",
+        "string_view": "cpp",
+        "xmemory0": "cpp"
     },
 }

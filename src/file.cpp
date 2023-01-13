@@ -1,13 +1,7 @@
 #include "file.h"
-#include <fstream>
-#include <ShlObj.h>
 #include <algorithm>
 #include <sstream>
 #include <string>
-#include <boost/process/detail/child_decl.hpp>
-#include <boost/asio/read_until.hpp>
-#include <boost/asio/buffer.hpp>
-
 namespace fs = std::filesystem;
 struct fsException : public fs::filesystem_error
 {
@@ -29,59 +23,71 @@ void MayaGather::folder::copyFile(const fs::path &in_from, const fs::path &in_to
     const auto copyOptions = std::filesystem::copy_options::update_existing | std::filesystem::copy_options::recursive;
     fs::copy(in_from, in_to, copyOptions);
 }
-fs::path MayaGather::folder::getDocumentPath()
+fs::path MayaGather::folder::getEnvPath(const KNOWNFOLDERID &in_env)
 {
     /// 这里我们手动做一些工作
     /// 获取环境变量 FOLDERID_Documents
     PWSTR pManager;
-    SHGetKnownFolderPath(FOLDERID_Documents, NULL, nullptr, &pManager);
+    SHGetKnownFolderPath(in_env, NULL, nullptr, &pManager);
     auto k_path = fs::path{pManager};
     CoTaskMemFree(pManager);
     return k_path;
 }
-void MayaGather::folder::setMel(std::string &in_name, std::filesystem::path &in_directory, std::string &in_content)
+
+void MayaGather::folder::createShelf(std::string& in_shelfname,struct Mel mel,std::filesystem::path &in_directory)
 {
+    
+    std::string in_content=fmt::format(
+    R"(global proc {}() {{
+        global string $gBuffStr;
+        global string $gBuffStr0;
+        global string $gBuffStr1;
+
+
+        shelfButton
+            -enableCommandRepeat 1
+            -enable 1
+            -width 21
+            -height 21
+            -manage 1
+            -visible 1
+            -preventOverride 0
+            -annotation "{}" 
+            -enableBackground 0
+            -backgroundColor 0 0 0 
+            -highlightColor 0.321569 0.521569 0.65098 
+            -align "center" 
+            -label "install" 
+            -labelOffset 0
+            -rotation 0
+            -flipX 0
+            -flipY 0
+            -useAlpha 1
+            -font "plainLabelFont" 
+            -overlayLabelColor 0.8 0.8 0.8 
+            -overlayLabelBackColor 0 0 0 0.5 
+            -image "{}" 
+            -image1 "{}" 
+            -style "iconOnly" 
+            -marginWidth 1
+            -marginHeight 1
+            -command "{}"
+            -sourceType "python" 
+            -commandRepeatable 1
+            -flat 1
+    ;
+    }}
+    )",mel.in_fun,mel.in_button,mel.in_image,mel.in_image1,mel.in_buttonCommand);
+   
     fs::create_directories(in_directory);
-    std::ofstream ostrm(in_directory / in_name, std::ios::out);
+    std::ofstream ostrm(in_directory / in_shelfname, std::ios::out);
     ostrm << in_content;
 }
-//  MayaGather::startThread::startThread()
-//     : 
-//         child(),
-//         out_attr(),
-//         err_attr(),
-//         out_str(std::make_shared<boost::asio::streambuf>()),
-//         err_str(std::make_shared<boost::asio::streambuf>()) {}
 
-
-// void MayaGather::startThread::run(const std::vector<std::string> &in_args){
-//     using namespace std::literals;
-//     child=std::make_shared<boost::process::child>(
-//         boost::process::system(
-//         boost::process::args=in_args,
-//         boost::process::std_out>*out_attr,
-//         boost::process::std_err>*err_attr
-//     ));
-//     boost::process::on_exit =
-//           [this](int in_exit, const std::error_code& in_error_code) {
-//            (!in_error_code);
-//            (!in_exit);
-//           };
-//     // read_(out_attr, out_str);
-//     // read_(err_attr, err_str);
-
-// }
-
-// void MayaGather::startThread::read_(
-//     const std::shared_ptr<boost::process::pipe>& in_pipe, const std::shared_ptr<boost::asio::streambuf>& in_str
-// ){
-    
-//     boost::asio::read_until(*in_pipe, *in_str, '\n', const boost::system::error_code& ec, std::size_t in_n){
-//     if (!ec) {      
-//       std::string l_line{};
-//       std::istream l_istream{in_str.get()};
-//       std::getline(l_istream, l_line);
-//     } else {
-//     }
-//   });
+// void MayaGather::folder::installTool(std::vector<std::string> &in_name, std::vector<std::filesystem::path> &from_path, std::vector<std::filesystem::path> &to_path, std::vector<std::filesystem::path> &in_directory, std::vector<std::string> &in_content)
+// {
+//     for (int i = 0; i < from_path.size(); i++)
+//         copyFile(from_path[i], to_path[i]);
+//     for (int j = 0; j < in_directory.size(); j++)
+//         createShelf(in_name[j], in_directory[j], in_content[j]);
 // }

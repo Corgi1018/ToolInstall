@@ -1,34 +1,30 @@
-#pragma once
 #include <iostream>
 #include <filesystem>
 #include <fstream>
-#include <boost/process.hpp>
+#include <ShlObj.h>
+#include <fmt/core.h>
 // #include <boost/test/tools/interface.hpp>
 // #include <boost/test/unit_test_log.hpp>
  
 namespace MayaGather{
 class folder {
+
     
     public:
-    void setMel(std::string& in_name,std::filesystem::path& in_directory,std::string& in_content);
+    void createShelf(std::string& in_shelfname,struct Mel mel,std::filesystem::path& in_directory);
     void createDir(std::filesystem::path& in_path);
     void copyFile(const std::filesystem::path& in_from,const std::filesystem::path& in_to);
     bool folderExists(const std::filesystem::path&in_path);
-    std::filesystem::path getDocumentPath();
-    void startThread();
+    std::filesystem::path getEnvPath(const KNOWNFOLDERID& in_env);
+    void installTool(std::vector<std::string> &in_name,std::vector<std::filesystem::path>& from_path,std::vector<std::filesystem::path>& to_path,std::vector<std::filesystem::path>& in_directory, std::vector<std::string> &in_content);
     private:
     };
-// struct startThread{
-//     std::shared_ptr<boost::process::child>child;
-//     std::shared_ptr<boost::process::async_pipe> out_attr;
-//     std::shared_ptr<boost::process::async_pipe> err_attr;
-//     std::shared_ptr<boost::asio::streambuf>out_str{};
-//     std::shared_ptr<boost::asio::streambuf>err_str{};
+    struct Mel{
+    std::string in_fun;
+    std::string in_button;
+    std::string in_image;
+    std::string in_image1;
+    std::string in_buttonCommand;
+    };
 
-//     explicit startThread();
-//     void run(const std::vector<std::string>& in_args);
-//     static void read_(
-//       const std::shared_ptr<boost::process::pipe>& in_pipe, const std::shared_ptr<boost::asio::streambuf>& in_str
-//   );
-// };
 };

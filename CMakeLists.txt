@@ -31,6 +31,7 @@ iostreams
 program_options
 contract
 coroutine)
+find_package(fmt)
 target_link_libraries (MayaGather Boost::filesystem)
 target_link_libraries(MayaGather Boost::unit_test_framework)
 target_link_libraries(MayaGather Boost::log)
@@ -40,6 +41,7 @@ target_link_libraries(MayaGather Boost::locale)
 target_link_libraries(MayaGather Boost::program_options)
 target_link_libraries(MayaGather Boost::contract)
 target_link_libraries(MayaGather Boost::coroutine)
+target_link_libraries(MayaGather fmt::fmt)
 
 
 

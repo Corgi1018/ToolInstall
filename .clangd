@@ -1,0 +1,10 @@
+Diagnostics:
+  UnusedIncludes: Strict
+InlayHints:
+  Enabled: No
+  ParameterNames: No
+  DeducedTypes: No
+Hover:
+  ShowAKA: Yes
+CompileFlags: 
+  CompilationDatabase: build/Ninja_debug
