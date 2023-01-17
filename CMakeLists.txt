@@ -12,8 +12,9 @@ add_executable(MayaGather main.cpp)
 target_sources(
     MayaGather 
     PUBLIC
-    "src/file.cpp"
     "src/file.h"
+    "src/maya_plugin.h"
+    "src/maya_plugin.cpp"
 )
 # target_link_libraries(MayaGather PUBLIC src) 
 
