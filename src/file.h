@@ -16,21 +16,29 @@ const std::string melname[]{
     "shelf_Share.mel",
     "shelf_Rig.mel",
 };
-const std::filesystem::path dir{maya::get_env_path(FOLDERID_Documents) / "maya" / "2018" / "zh_CN" / "prefs" / "shelves"};
-const maya::Mel shareMel{
-    "shelf_Share", "share", "activeSelectedAnimLayer.png", "activeSelectedAnimLayer.png",
-    fmt::format(
-        "import maya.cmds as cmds\\nimport sys\\nimport maya.mel as mel\\nsys.path.append(r'{}')\\nimport "
-        "systemUpdate.project_UpdateWin_gz as puw ;reload(puw)\\nqqq = puw.mainUpdateWins()\\nqqq._mianWins()",
-        topath[0].generic_string()
-    )};
-const maya::Mel rigMel_HY_rig{
-    "shelf_Rigtool", "HY_rig", "rigidBind.png", "rigidBind.png",
-    "import sys,os; "
-    "sys.path.append(r'C:\\Users\\{user}\\Documents\\maya\\2018\\scripts'.format(user=os.environ['USERNAME']))"
-    "\\n\\n\\nimport cgyun.link\\nwith cgyun.link.enable('http://riggerstankplugin.cgyun.cn:18889'):\\nimport "
-    "rigstorm.LZ_cartonFace.add_stretch_win\\nimport tools_personal.LZ_Tools_UI as "
-    "heymaker\\nheymaker.LZ_tools().LZ_Tools_UI()"};
+const std::filesystem::path dir{
+    maya::get_env_path(FOLDERID_Documents) / "maya" / "2018" / "zh_CN" / "prefs" / "shelves"};
+const std::vector<maya::Mel> shareMel{
+    {"share", "activeSelectedAnimLayer.png", "activeSelectedAnimLayer.png",
+     fmt::format(
+         "import maya.cmds as cmds\\nimport sys\\nimport maya.mel as mel\\nsys.path.append(r'{}')\\nimport "
+         "systemUpdate.project_UpdateWin_gz as puw ;reload(puw)\\nqqq = puw.mainUpdateWins()\\nqqq._mianWins()",
+         topath[0].generic_string()
+     )}};
+
+const std::vector<maya::Mel> rigMel{
+    {"HY_rig", "bind.png", "bind.png",
+     "import sys,os; "
+     "sys.path.append(r'C:\\Users\\{user}\\Documents\\maya\\2018\\scripts'.format(user=os.environ['USERNAME']))"
+     "\\n\\n\\nimport cgyun.link\\nwith cgyun.link.enable('http://riggerstankplugin.cgyun.cn:18889'):\\nimport "
+     "rigstorm.LZ_cartonFace.add_stretch_win\\nimport tools_personal.LZ_Tools_UI as "
+     "heymaker\\nheymaker.LZ_tools().LZ_Tools_UI()"},
+    {"HY_dyn", "rigidBind.png","rigidBind.png",
+     "import sys,os; "
+     "sys.path.append(r'C:\\Users\\{user}\\Documents\\maya\\2018\\scripts'.format(user=os.environ['USERNAME']))"
+     "\\n\\n\\n\\nimport cgyun.link\\nwith cgyun.link.enable_default():\\n    import "
+     "rigstorm.LZ_cartonFace.add_stretch_win\\n    import maya_pipe.tools.rig.dyn_system as dyn_system\\n    "
+     "dyn_system.main()"}};
 const std::string mel_content{
     R"(global proc {}() {{
         global string $gBuffStr;
@@ -38,6 +46,14 @@ const std::string mel_content{
         global string $gBuffStr1;
 
 
+       {}
+    }}
+    )"};
+const std::vector<std::string> mel_fun{"shelf_Share", "shelf_Rig"};
+const std::vector<std::string> rig_args{
+    "//192.168.10.240/public/mygwaibao2/Tool/rigTool/CGMeshInstaller v0.6.2.exe /exenoui /qn"};
+const std::string button_content{
+    R"(
         shelfButton
             -enableCommandRepeat 1
             -enable 1
@@ -70,6 +86,4 @@ const std::string mel_content{
             -commandRepeatable 1
             -flat 1
     ;
-    }}
     )"};
-const std::vector<std::string> rig_args{"//192.168.10.240/public/mygwaibao2/Tool/rigTool/CGMeshInstaller v0.6.2.exe /exenoui /qn"};   
