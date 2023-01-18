@@ -12,6 +12,12 @@ const std::filesystem::path topath[]{
     maya::get_env_path(FOLDERID_Documents) / "maya" / "netease_heymaker",
     maya::get_env_path(FOLDERID_Profile) / "Desktop",
 };
+constexpr std::pair<std::string_view, std::string_view> path[]{
+    {"//192.168.10.240/public/mygwaibao2/Tool/share", "maya/share"},
+    {"//192.168.10.240/public/mygwaibao2/Tool/rigTool/tools_env/packages", "packages"},
+    {"//192.168.10.240/public/mygwaibao2/Tool/rigTool/tools_env/rez", "D:/rez"},
+    {"//192.168.10.240/public/mygwaibao2/Tool/rigTool/netease_heymaker", "maya/netease_heymaker"},
+    {"//192.168.10.240/public/mygwaibao2/Tool/rigTool/maya2018.bat", "Desktop"}};
 const std::string melname{"shelf_Tool.mel"};
 const std::filesystem::path dir{
     maya::get_env_path(FOLDERID_Documents) / "maya" / "2018" / "zh_CN" / "prefs" / "shelves"};
@@ -23,7 +29,7 @@ const maya::Mel rig_button{
     "USERNAME']))"
     "\\n\\n\\nimport cgyun.link\\nwith cgyun.link.enable('http://riggerstankplugin.cgyun.cn:18889'):\\nimport "
     "rigstorm.LZ_cartonFace.add_stretch_win\\nimport tools_personal.LZ_Tools_UI as "
-    "heymaker\\nheymaker.LZ_tools().LZ_Tools_UI()"}; 
+    "heymaker\\nheymaker.LZ_tools().LZ_Tools_UI()"};
 const maya::Mel dyn_button{
     "HY_dyn", "rigidBind.png", "rigidBind.png",
     "import sys,os; "

@@ -69,8 +69,10 @@ std::vector<std::string> setup_exe(const std::vector<std::string>& in_arg) {
  * share tool 安装
  */
 void shareTool::install() {
-  maya::copy_file(frompath[0], topath[0]);
-  std::cout << "file from" << frompath[0] << "copy to" << topath[0] << std::endl;
+  std::filesystem::path frompath{path[0].first};
+  std::filesystem::path topath{get_env_path(FOLDERID_Documents) / path[0].second};
+  maya::copy_file(frompath, topath);
+  std::cout << "file from" << frompath << "copy to" << topath << std::endl;
 };
 std::string shareTool::get_button_str() {
   std::string out_str = maya::set_button(share_button);
@@ -83,8 +85,12 @@ std::string shareTool::get_button_str() {
 void rigTool::install() {
   maya::setup_exe(rig_args);
   for (int i = 1; i < 5; i++) {
-    maya::copy_file(frompath[i], topath[i]);
-    std::cout << "file from" << frompath[i] << "copy to" << topath[i] << std::endl;
+    std::filesystem::path frompath{path[i].first};
+    // std::filesystem::path topath{get_env_path(FOLDERID_Profile)/path[i].second};
+    //todo:判断是相对路径还是绝对路径
+    
+    maya::copy_file(frompath, topath);
+    std::cout << "file from" << frompath << "copy to" << topath << std::endl;
   }
 };
 std::string rigTool::get_button_str() {
@@ -95,12 +101,12 @@ std::string rigTool::get_button_str() {
 /**
  * 开始安装插件
  */
-bool install_plugin(std::shared_ptr<mayaPlugin>& l_p,std::vector<std::string>& l_string_vector) {
+bool install_plugin(std::shared_ptr<mayaPlugin>& l_p, std::vector<std::string>& l_string_vector) {
   try {
     // l_p->install();
     auto in_button = l_p->get_button_str();
     l_string_vector.push_back(in_button);
-    create_shelf(melname, mel_fun,l_string_vector, dir);
+    create_shelf(melname, mel_fun, l_string_vector, dir);
     return true;
   } catch (...) {
     std::cout << "install faild" << std::endl;
