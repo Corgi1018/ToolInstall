@@ -18,7 +18,7 @@ void copy_file(const std::filesystem::path& in_from, const std::filesystem::path
  */
 std::string set_button(const struct Mel& in_mel) {
   std::string in_button =
-      fmt::format(button_content, in_mel.in_button, in_mel.in_image, in_mel.in_image1, in_mel.in_buttonCommand);
+      fmt::format(button_content.data(), in_mel.in_button, in_mel.in_image, in_mel.in_image1, in_mel.in_buttonCommand);
   return in_button;
 };
 
@@ -76,7 +76,9 @@ void shareTool::install() {
   std::cout << "file from" << frompath << "copy to" << topath << std::endl;
 };
 std::string shareTool::get_button_str() {
-  std::string out_str = maya::set_button(share_button);
+  std::string inbutton= maya::set_button(share_button);
+  std::filesystem::path topath{get_env_path(FOLDERID_Documents) / path[0].second};
+  std::string out_str=fmt::format(inbutton,topath.generic_string());
   return out_str;
 };
 
@@ -97,7 +99,7 @@ void rigTool::install() {
       topath = get_env_path(FOLDERID_Profile)/path[i].second;
     else
       topath = get_env_path(FOLDERID_Documents)/path[i].second;
-    // fs::status(path[i].second);
+    fs::status(path[i].second);
     maya::copy_file(frompath, topath);
     std::cout << "file from" << frompath << "copy to" << topath << std::endl;
   }
@@ -112,7 +114,7 @@ std::string rigTool::get_button_str() {
  */
 bool install_plugin(std::shared_ptr<mayaPlugin>& l_p, std::vector<std::string>& l_string_vector) {
   try {
-    // l_p->install();
+    l_p->install();
     auto in_button = l_p->get_button_str();
     l_string_vector.push_back(in_button);
     create_shelf(melname, mel_fun, l_string_vector, maya::get_env_path(FOLDERID_Documents)/dir);

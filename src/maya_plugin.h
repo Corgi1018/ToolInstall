@@ -25,10 +25,10 @@ void create_shelf(
 std::vector<std::string> setup_exe(const std::string_view& in_arg);
 
 struct Mel {
-  std::string in_button;
-  std::string in_image;
-  std::string in_image1;
-  std::string in_buttonCommand;
+  std::string_view in_button;
+  std::string_view in_image;
+  std::string_view in_image1;
+  std::string_view in_buttonCommand;
 };
 
 class shareTool : public mayaPlugin {
