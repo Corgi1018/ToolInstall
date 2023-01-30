@@ -19,7 +19,7 @@ std::filesystem::path get_env_path(const KNOWNFOLDERID& in_env);
 void copy_file(const std::filesystem::path& in_from, const std::filesystem::path& in_to);
 std::string set_button(const struct Mel& in_mel);
 void create_shelf(
-    const std::string& in_shelfname, const std::string& in_fun, const std::vector<std::string>& in_button,
+    const std::string_view& in_shelfname, const std::string_view& in_fun, const std::vector<std::string>& in_button,
     const std::filesystem::path& in_directory
 );
 std::vector<std::string> setup_exe(const std::vector<std::string>& in_arg);

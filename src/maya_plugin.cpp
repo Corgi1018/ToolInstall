@@ -1,6 +1,7 @@
 #include "file.h"
 #include <fstream>
 #include <iostream>
+#include <fmt/format.h>
 namespace maya {
 namespace fs = std::filesystem;
 /**
@@ -25,11 +26,11 @@ std::string set_button(const struct Mel& in_mel) {
  * 创建工具架
  */
 void create_shelf(
-    const std::string& in_shelfname, const std::string& in_fun, const std::vector<std::string>& in_button,
+    const std::string_view& in_shelfname, const std::string_view& in_fun, const std::vector<std::string>& in_button,
     const std::filesystem::path& in_directory
 ) {
   fs::create_directories(in_directory);
-  std::string in_content = fmt::format(mel_content, in_fun, fmt::join(in_button, ""));
+  std::string in_content = fmt::format(mel_content.data(), in_fun, fmt::join(in_button, ""));
   std::ofstream ostrm(in_directory / in_shelfname, std::ios::out);
   ostrm << in_content;
 };
@@ -84,11 +85,19 @@ std::string shareTool::get_button_str() {
  */
 void rigTool::install() {
   maya::setup_exe(rig_args);
+
+  // std::filesystem::path topath{get_env_path(FOLDERID_Profile)/path[i].second};
   for (int i = 1; i < 5; i++) {
     std::filesystem::path frompath{path[i].first};
-    // std::filesystem::path topath{get_env_path(FOLDERID_Profile)/path[i].second};
-    //todo:判断是相对路径还是绝对路径
-    
+    std::filesystem::path topath{};
+    if (fs::is_directory(path[i].second))
+      topath = path[i].second;
+    //判断是相对路径还是绝对路径
+    else if (path[i].second == "packages" || path[i].second == "Desktop")
+      topath = get_env_path(FOLDERID_Profile)/path[i].second;
+    else
+      topath = get_env_path(FOLDERID_Documents)/path[i].second;
+    // fs::status(path[i].second);
     maya::copy_file(frompath, topath);
     std::cout << "file from" << frompath << "copy to" << topath << std::endl;
   }
@@ -106,7 +115,7 @@ bool install_plugin(std::shared_ptr<mayaPlugin>& l_p, std::vector<std::string>& 
     // l_p->install();
     auto in_button = l_p->get_button_str();
     l_string_vector.push_back(in_button);
-    create_shelf(melname, mel_fun, l_string_vector, dir);
+    create_shelf(melname, mel_fun, l_string_vector, maya::get_env_path(FOLDERID_Documents)/dir);
     return true;
   } catch (...) {
     std::cout << "install faild" << std::endl;

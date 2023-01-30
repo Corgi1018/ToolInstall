@@ -1,26 +1,13 @@
 #include "maya_plugin.h"
-const std::filesystem::path frompath[]{
-    "//192.168.10.240/public/mygwaibao2/Tool/share",
-    "//192.168.10.240/public/mygwaibao2/Tool/rigTool/tools_env/packages",
-    "//192.168.10.240/public/mygwaibao2/Tool/rigTool/tools_env/rez",
-    "//192.168.10.240/public/mygwaibao2/Tool/rigTool/netease_heymaker",
-    "//192.168.10.240/public/mygwaibao2/Tool/rigTool/maya2018.bat"};
-const std::filesystem::path topath[]{
-    maya::get_env_path(FOLDERID_Documents) / "Maya" / "share",
-    maya::get_env_path(FOLDERID_Profile) / "packages",
-    "D:/rez",
-    maya::get_env_path(FOLDERID_Documents) / "maya" / "netease_heymaker",
-    maya::get_env_path(FOLDERID_Profile) / "Desktop",
-};
 constexpr std::pair<std::string_view, std::string_view> path[]{
     {"//192.168.10.240/public/mygwaibao2/Tool/share", "maya/share"},
     {"//192.168.10.240/public/mygwaibao2/Tool/rigTool/tools_env/packages", "packages"},
     {"//192.168.10.240/public/mygwaibao2/Tool/rigTool/tools_env/rez", "D:/rez"},
     {"//192.168.10.240/public/mygwaibao2/Tool/rigTool/netease_heymaker", "maya/netease_heymaker"},
     {"//192.168.10.240/public/mygwaibao2/Tool/rigTool/maya2018.bat", "Desktop"}};
-const std::string melname{"shelf_Tool.mel"};
-const std::filesystem::path dir{
-    maya::get_env_path(FOLDERID_Documents) / "maya" / "2018" / "zh_CN" / "prefs" / "shelves"};
+constexpr std::string_view melname{"shelf_Tool.mel"};
+constexpr std::string_view mel_fun{"shelf_Tool"};
+constexpr std::string_view dir{"maya/2018/zh_CN/prefs/shelves"};
 
 const maya::Mel rig_button{
     "HY_rig", "bind.png", "bind.png",
@@ -43,9 +30,9 @@ const maya::Mel share_button{
     fmt::format(
         "import maya.cmds as cmds\\nimport sys\\nimport maya.mel as mel\\nsys.path.append(r'{}')\\nimport "
         "systemUpdate.project_UpdateWin_gz as puw ;reload(puw)\\nqqq = puw.mainUpdateWins()\\nqqq._mianWins()",
-        topath[0].generic_string()
+        path[0].second
     )};
-const std::string mel_content{
+constexpr std::string_view mel_content{
     R"(global proc {}() {{
         global string $gBuffStr;
         global string $gBuffStr0;
@@ -55,7 +42,7 @@ const std::string mel_content{
        {}
     }}
     )"};
-const std::string mel_fun{"shelf_Tool"};
+
 const std::vector<std::string> rig_args{
     "//192.168.10.240/public/mygwaibao2/Tool/rigTool/CGMeshInstaller v0.6.2.exe /exenoui /qn"};
 const std::string button_content{
