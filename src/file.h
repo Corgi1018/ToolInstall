@@ -10,7 +10,7 @@ constexpr std::string_view mel_fun{"shelf_Tool"};
 constexpr std::string_view dir{"maya/2018/zh_CN/prefs/shelves"};
 
 constexpr maya::Mel rig_button{
-    "HY_rig", "bind.png", "bind.png",
+    "HY_rig", "addSkinInfluence.png", "addSkinInfluence.png",
     "import sys,os; "
     "sys.path.append(r'C:\\\\Users\\\\{user}\\\\Documents\\\\maya\\\\2018\\\\scripts'.format(user=os.environ['"
     "USERNAME']))"
@@ -27,8 +27,8 @@ constexpr maya::Mel dyn_button{
     "dyn_system.main()"};
 constexpr maya::Mel share_button{
     "share",
-    "activeSelectedAnimLayer.png",
-    "activeSelectedAnimLayer.png",
+    "alignOnMax.png",
+    "alignOnMax.png",
     "import maya.cmds as cmds\\nimport sys\\nimport maya.mel as mel\\nsys.path.append(r'{}')\\nimport "
     "systemUpdate.project_UpdateWin_gz as puw ;reload(puw)\\nqqq = puw.mainUpdateWins()\\nqqq._mianWins()",
 
