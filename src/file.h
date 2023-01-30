@@ -43,7 +43,7 @@ constexpr std::string_view mel_content{
     }}
     )"};
 
-const std::vector<std::string> rig_args{
+constexpr std::string_view rig_args{
     "//192.168.10.240/public/mygwaibao2/Tool/rigTool/CGMeshInstaller v0.6.2.exe /exenoui /qn"};
 const std::string button_content{
     R"(

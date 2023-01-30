@@ -51,11 +51,11 @@ std::filesystem::path get_env_path(const KNOWNFOLDERID& in_env) {
 /**
  * 启动exe子进程
  */
-std::vector<std::string> setup_exe(const std::vector<std::string>& in_arg) {
+std::vector<std::string> setup_exe(const std::string_view& in_arg) {
   boost::process::ipstream is;
   boost::process::ipstream erro;
   std::vector<std::string> data;
-  auto rt = boost::process::system(in_arg, boost::process::std_out > is, boost::process::std_err > erro);
+  auto rt = boost::process::system(in_arg.data(), boost::process::std_out > is, boost::process::std_err > erro);
   if (!rt) {
     std::string l_line{};
     std::getline(is, l_line);
