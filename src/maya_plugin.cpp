@@ -87,8 +87,6 @@ std::string shareTool::get_button_str() {
  */
 void rigTool::install() {
   maya::setup_exe(rig_args);
-
-  // std::filesystem::path topath{get_env_path(FOLDERID_Profile)/path[i].second};
   for (int i = 1; i < 5; i++) {
     std::filesystem::path frompath{path[i].first};
     std::filesystem::path topath{};
@@ -99,7 +97,6 @@ void rigTool::install() {
       topath = get_env_path(FOLDERID_Profile)/path[i].second;
     else
       topath = get_env_path(FOLDERID_Documents)/path[i].second;
-    fs::status(path[i].second);
     maya::copy_file(frompath, topath);
     std::cout << "file from" << frompath << "copy to" << topath << std::endl;
   }

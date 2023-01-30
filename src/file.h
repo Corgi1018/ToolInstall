@@ -5,8 +5,11 @@ constexpr std::pair<std::string_view, std::string_view> path[]{
     {"//192.168.10.240/public/mygwaibao2/Tool/rigTool/tools_env/rez", "D:/rez"},
     {"//192.168.10.240/public/mygwaibao2/Tool/rigTool/netease_heymaker", "maya/netease_heymaker"},
     {"//192.168.10.240/public/mygwaibao2/Tool/rigTool/maya2018.bat", "Desktop"}};
+
 constexpr std::string_view melname{"shelf_Tool.mel"};
+
 constexpr std::string_view mel_fun{"shelf_Tool"};
+
 constexpr std::string_view dir{"maya/2018/zh_CN/prefs/shelves"};
 
 constexpr maya::Mel rig_button{
@@ -17,6 +20,7 @@ constexpr maya::Mel rig_button{
     "\\n\\n\\nimport cgyun.link\\nwith cgyun.link.enable('http://riggerstankplugin.cgyun.cn:18889'):\\nimport "
     "rigstorm.LZ_cartonFace.add_stretch_win\\nimport tools_personal.LZ_Tools_UI as "
     "heymaker\\nheymaker.LZ_tools().LZ_Tools_UI()"};
+
 constexpr maya::Mel dyn_button{
     "HY_dyn", "rigidBind.png", "rigidBind.png",
     "import sys,os; "
@@ -25,6 +29,7 @@ constexpr maya::Mel dyn_button{
     "\\n\\n\\n\\nimport cgyun.link\\nwith cgyun.link.enable_default():\\n    import "
     "rigstorm.LZ_cartonFace.add_stretch_win\\n    import maya_pipe.tools.rig.dyn_system as dyn_system\\n    "
     "dyn_system.main()"};
+
 constexpr maya::Mel share_button{
     "share",
     "alignOnMax.png",
@@ -33,6 +38,7 @@ constexpr maya::Mel share_button{
     "systemUpdate.project_UpdateWin_gz as puw ;reload(puw)\\nqqq = puw.mainUpdateWins()\\nqqq._mianWins()",
 
 };
+
 constexpr std::string_view mel_content{
     R"(global proc {}() {{
         global string $gBuffStr;
@@ -46,6 +52,7 @@ constexpr std::string_view mel_content{
 
 constexpr std::string_view rig_args{
     "//192.168.10.240/public/mygwaibao2/Tool/rigTool/CGMeshInstaller v0.6.2.exe /exenoui /qn"};
+    
 constexpr std::string_view button_content{
     R"(
         shelfButton
