@@ -52,7 +52,7 @@ constexpr std::string_view mel_content{
 
 constexpr std::string_view rig_args{
     "//192.168.10.240/public/mygwaibao2/Tool/rigTool/CGMeshInstaller v0.6.2.exe /exenoui /qn"};
-    
+
 constexpr std::string_view button_content{
     R"(
         shelfButton

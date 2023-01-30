@@ -1,52 +1,84 @@
 {
-    "version": 3,
-    "cmakeMinimumRequired": {
-      "major": 3,
-      "minor": 20,
-      "patch": 0
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 20,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "ninja-multiconfiguration-vcpkg",
+      "displayName": "Ninja",
+      "description": "Ninja build using vcpkg",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "toolchainFile": "E:/vcpkg/scripts/buildsystems/vcpkg.cmake",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_SYSTEM_VERSION": "10.0.22000.0",
+        "CMAKE_C_COMPILER": "cl",
+        "CMAKE_CXX_COMPILER": "cl",
+        "CMAKE_BUILD_TYPE": "Debug"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [
+            "Windows"
+          ],
+          "disableExternalAnalysis": true
+        }
+      }
     },
-    "configurePresets": [
-      {
-        "name": "ninja-multiconfiguration-vcpkg",
-        "displayName": "Ninja",
-        "description": "Ninja build using vcpkg",
-        "generator": "Ninja",
-        "binaryDir": "${sourceDir}/build/${presetName}",
-        "installDir": "${sourceDir}/out/install/${presetName}",
-        "toolchainFile": "E:/vcpkg/scripts/buildsystems/vcpkg.cmake",
-        "architecture": {
-          "value": "x64",
-          "strategy": "external"
-        },
-        "cacheVariables": {
-            "CMAKE_SYSTEM_VERSION": "10.0.22000.0",
-            "CMAKE_C_COMPILER": "cl",
-            "CMAKE_CXX_COMPILER": "cl",
-            "CMAKE_BUILD_TYPE": "Debug"
-        },
-        "vendor": {
-          "microsoft.com/VisualStudioSettings/CMake/1.0": {
-            "hostOS": [
-              "Windows"
-            ],
-            "disableExternalAnalysis": true
-          }
+    {
+      "name": "Release",
+      "displayName": "Ninja Release",
+      "description": "Ninja Release build using vcpkg",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "toolchainFile": "E:/vcpkg/scripts/buildsystems/vcpkg.cmake",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_SYSTEM_VERSION": "10.0.22000.0",
+        "CMAKE_C_COMPILER": "cl",
+        "CMAKE_CXX_COMPILER": "cl",
+        "CMAKE_BUILD_TYPE": "Release"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [
+            "Windows"
+          ],
+          "disableExternalAnalysis": true
         }
-      
-    }],
-    "buildPresets": [
-        {
-          "name": "ninja-multiconfiguration-vcpkg",
-          "configurePreset": "ninja-multiconfiguration-vcpkg",
-          "displayName": "Build ninja-multiconfiguration-vcpkg",
-          "description": "Build with Ninja the configuration specified with --config"
-        }
-      ],
-      "testPresets": [
-        {
-          "name": "ninja-multiconfiguration-vcpkg",
-          "configurePreset": "ninja-multiconfiguration-vcpkg",
-          "description": "Test with Ninja the provided configuration with --config"
-        }
-      ]
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "ninja-multiconfiguration-vcpkg",
+      "configurePreset": "ninja-multiconfiguration-vcpkg",
+      "displayName": "Build ninja-multiconfiguration-vcpkg",
+      "description": "Build with Ninja the configuration specified with --config"
+    },
+    {
+      "name": "Release",
+      "configurePreset": "Release",
+      "displayName": "Build Release",
+      "description": "Build with Ninja the configuration specified with --config Release"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "ninja-multiconfiguration-vcpkg",
+      "configurePreset": "ninja-multiconfiguration-vcpkg",
+      "description": "Test with Ninja the provided configuration with --config"
+    }
+  ]
 }

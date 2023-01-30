@@ -1,7 +1,7 @@
 #include "file.h"
+#include <fmt/format.h>
 #include <fstream>
 #include <iostream>
-#include <fmt/format.h>
 namespace maya {
 namespace fs = std::filesystem;
 /**
@@ -76,9 +76,9 @@ void shareTool::install() {
   std::cout << "file from" << frompath << "copy to" << topath << std::endl;
 };
 std::string shareTool::get_button_str() {
-  std::string inbutton= maya::set_button(share_button);
+  std::string inbutton = maya::set_button(share_button);
   std::filesystem::path topath{get_env_path(FOLDERID_Documents) / path[0].second};
-  std::string out_str=fmt::format(inbutton,topath.generic_string());
+  std::string out_str = fmt::format(inbutton, topath.generic_string());
   return out_str;
 };
 
@@ -90,13 +90,13 @@ void rigTool::install() {
   for (int i = 1; i < 5; i++) {
     std::filesystem::path frompath{path[i].first};
     std::filesystem::path topath{};
-    //判断是相对路径还是绝对路径
+    // 判断是相对路径还是绝对路径
     if (fs::is_directory(path[i].second))
       topath = path[i].second;
     else if (path[i].second == "packages" || path[i].second == "Desktop")
-      topath = get_env_path(FOLDERID_Profile)/path[i].second;
+      topath = get_env_path(FOLDERID_Profile) / path[i].second;
     else
-      topath = get_env_path(FOLDERID_Documents)/path[i].second;
+      topath = get_env_path(FOLDERID_Documents) / path[i].second;
     maya::copy_file(frompath, topath);
     std::cout << "file from" << frompath << "copy to" << topath << std::endl;
   }
@@ -114,8 +114,8 @@ bool install_plugin(std::shared_ptr<mayaPlugin>& l_p, std::vector<std::string>& 
     l_p->install();
     auto in_button = l_p->get_button_str();
     l_string_vector.push_back(in_button);
-    create_shelf(melname, mel_fun, l_string_vector, maya::get_env_path(FOLDERID_Documents)/dir);
-    std::cout<<"install success"<<std::endl;
+    create_shelf(melname, mel_fun, l_string_vector, maya::get_env_path(FOLDERID_Documents) / dir);
+    std::cout << "install success" << std::endl;
     return true;
   } catch (...) {
     std::cout << "install faild" << std::endl;

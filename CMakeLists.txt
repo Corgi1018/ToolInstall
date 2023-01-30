@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.20.0)
 project(MayaGather_Debug VERSION 0.1.0)
+project(MayaGather_Release VERSION 0.1.0)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(CTest)
 enable_testing()

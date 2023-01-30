@@ -11,10 +11,10 @@ namespace maya {
 class mayaPlugin {
  public:
   virtual void install(){};
-  virtual std::string get_button_str(){return "";};
+  virtual std::string get_button_str() { return ""; };
 };
 
-bool install_plugin(std::shared_ptr<mayaPlugin>& l_p,std::vector<std::string>& in_str);
+bool install_plugin(std::shared_ptr<mayaPlugin>& l_p, std::vector<std::string>& in_str);
 std::filesystem::path get_env_path(const KNOWNFOLDERID& in_env);
 void copy_file(const std::filesystem::path& in_from, const std::filesystem::path& in_to);
 std::string set_button(const struct Mel& in_mel);
