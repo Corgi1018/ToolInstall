@@ -90,9 +90,9 @@ void rigTool::install() {
   for (int i = 1; i < 5; i++) {
     std::filesystem::path frompath{path[i].first};
     std::filesystem::path topath{};
+    //判断是相对路径还是绝对路径
     if (fs::is_directory(path[i].second))
       topath = path[i].second;
-    //判断是相对路径还是绝对路径
     else if (path[i].second == "packages" || path[i].second == "Desktop")
       topath = get_env_path(FOLDERID_Profile)/path[i].second;
     else
@@ -115,6 +115,7 @@ bool install_plugin(std::shared_ptr<mayaPlugin>& l_p, std::vector<std::string>& 
     auto in_button = l_p->get_button_str();
     l_string_vector.push_back(in_button);
     create_shelf(melname, mel_fun, l_string_vector, maya::get_env_path(FOLDERID_Documents)/dir);
+    std::cout<<"install success"<<std::endl;
     return true;
   } catch (...) {
     std::cout << "install faild" << std::endl;
