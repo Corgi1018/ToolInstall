@@ -14,21 +14,13 @@ constexpr std::string_view dir{"maya/2018/zh_CN/prefs/shelves"};
 
 constexpr maya::Mel rig_button{
     "HY_rig", "addSkinInfluence.png", "addSkinInfluence.png",
-    "import sys,os; "
-    "sys.path.append(r'C:\\\\Users\\\\{user}\\\\Documents\\\\maya\\\\2018\\\\scripts'.format(user=os.environ['"
-    "USERNAME']))"
-    "\\n\\n\\nimport cgyun.link\\nwith cgyun.link.enable('http://riggerstankplugin.cgyun.cn:18889'):\\nimport "
-    "rigstorm.LZ_cartonFace.add_stretch_win\\nimport tools_personal.LZ_Tools_UI as "
-    "heymaker\\nheymaker.LZ_tools().LZ_Tools_UI()"};
+    R"(import sys,os; sys.path.append(r'C:\\Users\\{user}\\Documents\\maya\\2018\\scripts'.format(user=os.environ['USERNAME']))\n\n\nimport cgyun.link\nwith cgyun.link.enable('http://riggerstankplugin.cgyun.cn:18889'):\n    import rigstorm.LZ_cartonFace.add_stretch_win\n    import tools_personal.LZ_Tools_UI as heymaker\n    heymaker.LZ_tools().LZ_Tools_UI())"
+    };
 
 constexpr maya::Mel dyn_button{
     "HY_dyn", "rigidBind.png", "rigidBind.png",
-    "import sys,os; "
-    "sys.path.append(r'C:\\\\Users\\\\{user}\\\\Documents\\\\maya\\\\2018\\\\scripts'.format(user=os.environ['"
-    "USERNAME']))"
-    "\\n\\n\\n\\nimport cgyun.link\\nwith cgyun.link.enable_default():\\n    import "
-    "rigstorm.LZ_cartonFace.add_stretch_win\\n    import maya_pipe.tools.rig.dyn_system as dyn_system\\n    "
-    "dyn_system.main()"};
+     R"(import sys,os; sys.path.append(r'C:\\Users\\{user}\\Documents\\maya\\2018\\scripts'.format(user=os.environ['USERNAME']))\n\n\n\nimport cgyun.link\nwith cgyun.link.enable_default():\n    import rigstorm.LZ_cartonFace.add_stretch_win\n    import maya_pipe.tools.rig.dyn_system as dyn_system\n    dyn_system.main()\n)"
+    };
 
 constexpr maya::Mel share_button{
     "share",
