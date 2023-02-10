@@ -22,6 +22,7 @@ void create_shelf(
     const std::string_view& in_shelfname, const std::string_view& in_fun, const std::vector<std::string>& in_button,
     const std::filesystem::path& in_directory
 );
+void init_plugin();
 std::vector<std::string> setup_exe(const std::string_view& in_arg);
 
 struct Mel {

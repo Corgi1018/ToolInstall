@@ -1,21 +1,26 @@
 cmake_minimum_required(VERSION 3.20.0)
 project(MayaGather_Debug VERSION 0.1.0)
 project(MayaGather_Release VERSION 0.1.0)
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake")
 include(CTest)
 enable_testing()
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+#生成compile_components.json (clang)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 #使用中文
 add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
-
-add_executable(MayaGather main.cpp)
+add_library(MayaGather SHARED main.cpp)
+add_subdirectory(script/maya maya_${Maya_Version})
 target_sources(
     MayaGather 
     PUBLIC
-    "src/file.h"
-    "src/maya_plugin.h"
-    "src/maya_plugin.cpp"
+    # "src/file.h"
+    "script/maya/maya_plugin.h"
+    "script/maya/maya_plugin.cpp"
+    # "src/maya_plugin.h"
+    # "src/maya_plugin.cpp"
 )
 
 find_package(Boost COMPONENTS
@@ -50,6 +55,10 @@ target_link_libraries(MayaGather Boost::coroutine)
 target_link_libraries(MayaGather fmt::fmt)
 target_include_directories(MayaGather PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 target_link_libraries(MayaGather maya::maya_all)
+# 设置maya插件后缀名
+set_target_properties(
+    MayaGather PROPERTIES SUFFIX "_${Maya_Version}.mll"
+)
 
 
 include(CPack)

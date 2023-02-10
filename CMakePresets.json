@@ -19,6 +19,7 @@
         "strategy": "external"
       },
       "cacheVariables": {
+        "Maya_Version":"2018",
         "CMAKE_SYSTEM_VERSION": "10.0.22000.0",
         "CMAKE_C_COMPILER": "cl",
         "CMAKE_CXX_COMPILER": "cl",

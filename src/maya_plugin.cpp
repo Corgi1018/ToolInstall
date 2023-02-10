@@ -2,6 +2,7 @@
 #include <fmt/format.h>
 #include <fstream>
 #include <iostream>
+#include <regex>
 namespace maya {
 namespace fs = std::filesystem;
 /**
@@ -29,10 +30,26 @@ void create_shelf(
     const std::string_view& in_shelfname, const std::string_view& in_fun, const std::vector<std::string>& in_button,
     const std::filesystem::path& in_directory
 ) {
+  std::regex re(R"(maya::get_env_path(FOLDERID_Documents))");//需要匹配
+  for (auto const& dir_entry : std::filesystem::recursive_directory_iterator(in_directory)) {
+    std::vector<std::string> dir_v{};
+    std::cout<<dir_entry<<std::endl;
+    auto dir = dir_entry.path().generic_string();
+    dir_v.emplace_back(dir);
+    std::smatch m;//匹配结果
+    for (const auto maya_dir : dir_v) {
+      if (std::regex_search(maya_dir, m, re)) {
+        std::cout << m.str() << std::endl;
+      } else {
+        std::cout << "no matches found" << std::endl;
+      };
+    }
+  }
   fs::create_directories(in_directory);
   std::string in_content = fmt::format(mel_content.data(), in_fun, fmt::join(in_button, ""));
   std::ofstream ostrm(in_directory / in_shelfname, std::ios::out);
   ostrm << in_content;
+  std::cout << "creat shelf success" << std::endl;
 };
 
 /**
@@ -106,6 +123,14 @@ std::string rigTool::get_button_str() {
   return out_str;
 };
 
+
+
+
+
+
+
+
+
 /**
  * 开始安装插件
  */
@@ -123,3 +148,5 @@ bool install_plugin(std::shared_ptr<mayaPlugin>& l_p, std::vector<std::string>& 
   }
 };
 }  // namespace maya
+
+

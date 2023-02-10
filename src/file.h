@@ -10,7 +10,7 @@ constexpr std::string_view melname{"shelf_Tool.mel"};
 
 constexpr std::string_view mel_fun{"shelf_Tool"};
 
-constexpr std::string_view dir{"maya/2018/zh_CN/prefs/shelves"};
+constexpr std::string_view dir{"maya/2018"};
 
 constexpr maya::Mel rig_button{
     "HY_rig", "addSkinInfluence.png", "addSkinInfluence.png",
