@@ -58,8 +58,6 @@ class Shelf():
             Shelf._instances.discard(inst)
 
 class Toolshelf(Shelf):
-    def deleate(self):
-        self.deleteSelf()
     def build(self):     
         self.addButton("share",icon="alignOnMax.png",command=lambda :self.share_button())
         self.addButton("rig",icon="addSkinInfluence.png",command=lambda :self.rig_button())
