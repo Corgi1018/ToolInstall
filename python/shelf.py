@@ -62,6 +62,7 @@ class Toolshelf(Shelf):
         self.addButton("share",icon="alignOnMax.png",command=lambda :self.share_button())
         self.addButton("rig",icon="addSkinInfluence.png",command=lambda :self.rig_button())
         self.addButton("dyn",icon="rigidBind.png",command=lambda :self.dyn_button())
+        self.addButton("export_weight",icon="",command=lambda :self.export_weight_button())
 
     def share_button(self):
         import maya.cmds as cmds
@@ -88,7 +89,17 @@ class Toolshelf(Shelf):
             import rigstorm.LZ_cartonFace.add_stretch_win
             import maya_pipe.tools.rig.dyn_system as dyn_system
             dyn_system.main()
-Toolshelf.deleteSelf()
+    def export_weight_button(self):
+        import rig_ch.skinClusterWeight as skWt
+        skWt.win()
+        Select Skin Joint  #选择蒙皮骨骼
+        Reset Select Skined Pose  #重置bindPose
+        Get Inf Joint From .w file  #从.w文件获取蒙皮骨骼
+        Export SKinWeight  #导出skinCluster权重 支持（poly nurbsCurve nurbsSuface lattice）
+        Import SkinWeight  #导入skinCluster权重
+        Batch Export SKinWeight  #选中多个物体批量导出权重
+        Batch Import SkinWeight  #从文件夹中导入多个物体权重
+Toolshelf.deleteSelf()     
 Toolshelf()
         
 
