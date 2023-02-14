@@ -1,8 +1,10 @@
 #include "file.h"
 #include "maya_plugin.h"
+#include <wchar.h>
+#include <string>
 #include <fmt/format.h>
 #include <fstream>
-
+#include <boost/locale.hpp>
 namespace maya {
 namespace fs = std::filesystem;
 
@@ -37,6 +39,16 @@ void rigTool::install() {
     maya::copy_file(frompath, topath);
     std::cout << "file from" << frompath << "copy to" << topath << std::endl;
   }
+};
+
+
+void export_weightTool::install(){
+  // std::string l_str{path[7].first};
+  // std::filesystem::path frompath{boost::locale::conv::utf_to_utf<wchar_t>(l_str)};
+  std::filesystem::path frompath{path[7].first};
+  std::filesystem::path topath{get_env_path(FOLDERID_Documents) / path[7].second};
+  maya::copy_file(frompath,topath);
+  std::cout << "file from" << frompath << "copy to" << topath << std::endl;
 };
 
 void copy_file(const std::filesystem::path& in_from, const std::filesystem::path& in_to) {
@@ -75,8 +87,8 @@ bool install_plugin(std::shared_ptr<mayaPlugin>& l_p) {
     l_p->install();
     std::cout << "copy success" << std::endl;
     return true;
-  } catch (...) {
-    std::cout << "copy faild" << std::endl;
+  } catch (std::filesystem::filesystem_error &e) {
+    std::cout << "copy faild" <<e.what()<< std::endl;
     return false;
   }
 };

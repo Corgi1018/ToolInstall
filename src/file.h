@@ -6,7 +6,8 @@ constexpr std::pair<std::string_view, std::string_view> path[]{
     {"//192.168.10.240/public/mygwaibao2/Tool/rigTool/netease_heymaker", "maya/netease_heymaker"},
     {"//192.168.10.240/public/mygwaibao2/Tool/rigTool/maya2018.bat", "Desktop"},
     {"//192.168.10.240/public/mygwaibao2/Tool/MayaGather_2018.mll","maya/modules/plug-ins"},
-    {"//192.168.10.240/public/mygwaibao2/Tool/MayaGather_2018.mod","maya/modules"}};
+    {"//192.168.10.240/public/mygwaibao2/Tool/MayaGather_2018.mod","maya/modules"},
+    {"//192.168.10.240/public/mygwaibao2/Tool/拷贝权重插件/skinClusterWeight_v2.1_py/scripts","maya/scripts"}};
 
 constexpr std::string_view rig_args{
     "//192.168.10.240/public/mygwaibao2/Tool/rigTool/CGMeshInstaller v0.6.2.exe /exenoui /qn"};

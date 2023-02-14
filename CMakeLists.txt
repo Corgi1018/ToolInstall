@@ -12,14 +12,18 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 add_library(MayaGather SHARED script/maya/maya_plugin.cpp)
-add_executable(copyFile main.cpp)
-target_sources(
-    copyFile
-    PUBLIC
-    "src/file.h"
-    "src/maya_plugin.h"
-    "src/maya_plugin.cpp"
-)
+# add_executable(copyFile 
+# EXCLUDE_FROM_ALL
+# main.cpp
+# MayaGather.manifest
+# win_exe.rc)
+# target_sources(
+#     copyFile
+#     PUBLIC
+#     "src/file.h"
+#     "src/maya_plugin.h"
+#     "src/maya_plugin.cpp"
+# )
 add_subdirectory(script/maya maya_${Maya_Version})
 target_sources(
     MayaGather 
@@ -48,16 +52,16 @@ endif()
 
 
 
-target_link_libraries (copyFile Boost::filesystem)
-target_link_libraries(copyFile Boost::unit_test_framework)
-target_link_libraries(copyFile Boost::log)
-target_link_libraries(copyFile Boost::log_setup)
-target_link_libraries(copyFile Boost::iostreams)
-target_link_libraries(copyFile Boost::locale)
-target_link_libraries(copyFile Boost::program_options)
-target_link_libraries(copyFile Boost::contract)
-target_link_libraries(copyFile Boost::coroutine)
-target_link_libraries(copyFile fmt::fmt)
+# target_link_libraries (copyFile Boost::filesystem)
+# target_link_libraries(copyFile Boost::unit_test_framework)
+# target_link_libraries(copyFile Boost::log)
+# target_link_libraries(copyFile Boost::log_setup)
+# target_link_libraries(copyFile Boost::iostreams)
+# target_link_libraries(copyFile Boost::locale)
+# target_link_libraries(copyFile Boost::program_options)
+# target_link_libraries(copyFile Boost::contract)
+# target_link_libraries(copyFile Boost::coroutine)
+# target_link_libraries(copyFile fmt::fmt)
 target_include_directories(MayaGather PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 target_link_libraries(MayaGather maya::maya_all)
 # 设置maya插件后缀名

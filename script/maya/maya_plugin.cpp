@@ -13,6 +13,7 @@ MStatus test_plugin::doIt(const MArgList& args) {
 void *test_plugin::creator() { return new test_plugin(); }
 
 }  // namespace mayaPlugin
+
 MStatus initializePlugin(MObject obj) {
 
   MFnPlugin plugin(obj, "test", "1.0");
@@ -28,5 +29,5 @@ MStatus initializePlugin(MObject obj) {
 MStatus uninitializePlugin(MObject obj) {
   MFnPlugin plugin(obj, "test2", "2.0");
   MStatus status;
-  return MS::kFailure;
+  return MS::kSuccess;
 }
