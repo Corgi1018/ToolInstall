@@ -1,10 +1,9 @@
-#include "file.h"
+#include "../Source/file.h"
 #include "maya_plugin.h"
 #include <wchar.h>
 #include <string>
 #include <fmt/format.h>
 #include <fstream>
-#include <boost/locale.hpp>
 namespace maya {
 namespace fs = std::filesystem;
 

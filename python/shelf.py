@@ -62,16 +62,16 @@ class Toolshelf(Shelf):
         self.addButton("share",icon="alignOnMax.png",command=lambda :self.share_button())
         self.addButton("rig",icon="addSkinInfluence.png",command=lambda :self.rig_button())
         self.addButton("dyn",icon="rigidBind.png",command=lambda :self.dyn_button())
-        # self.addButton("export_weight",icon="exportSmoothSkin.png",command=lambda :self.export_weight_button())
+        self.addButton("export_weight",icon="exportSmoothSkin.png",command=lambda :self.export_weight_button())
         self.addButton("copy_weight",icon="copySkinWeight.png",command=lambda :self.copy_weight_button())
-        self.addButton("eye",icon="eye.png",command=lambda:self.eye_button())
+        self.addButton("eye",icon="ambientlight.png",command=lambda:self.eye_button())
 
     def share_button(self):
         import maya.cmds as cmds
         import sys
+        import os
         import maya.mel as mel
-        #sys.path.append(r'R:\TO_sunguizhou\WeiXiao\rig\script\aa')
-        sys.path.append(r'C:\Users\Administrator\Documents\maya\share')  # 更改文件的路径
+        sys.path.append(r'C:\Users\{user}\Documents\maya\share'.format(user=os.environ['USERNAME']))  # 更改文件的路径
         import systemUpdate.project_UpdateWin_gz as puw ;reload(puw)
         qqq = puw.mainUpdateWins()
         qqq._mianWins()
@@ -91,16 +91,13 @@ class Toolshelf(Shelf):
             import rigstorm.LZ_cartonFace.add_stretch_win
             import maya_pipe.tools.rig.dyn_system as dyn_system
             dyn_system.main()
-    # def export_weight_button(self):
-    #     import rig_ch.skinClusterWeight as skWt
-    #     skWt.win()
-    #     # Select Skin Joint  #选择蒙皮骨骼
-    #     # Reset Select Skined Pose  #重置bindPose
-    #     # Get Inf Joint From .w file  #从.w文件获取蒙皮骨骼
-    #     # Export SKinWeight  #导出skinCluster权重 支持（poly nurbsCurve nurbsSuface lattice）
-    #     # Import SkinWeight  #导入skinCluster权重
-    #     # Batch Export SKinWeight  #选中多个物体批量导出权重
-    #     # Batch Import SkinWeight  #从文件夹中导入多个物体权重
+    def export_weight_button(self):
+        import sys
+        import os
+        sys.path.append(r'C:\Users\{user}\Documents\maya\2018\scripts'.format(user=os.environ['USERNAME']))
+        import rig_ch.skinClusterWeight as skWt
+        skWt.win()
+
     def copy_weight_button(self):
         import maya.mel as mel 
         mel.eval(r'''
