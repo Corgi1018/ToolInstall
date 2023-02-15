@@ -64,7 +64,7 @@ class Toolshelf(Shelf):
         self.addButton("rig",icon="addSkinInfluence.png",command=lambda :self.rig_button())
         self.addButton("dyn",icon="rigidBind.png",command=lambda :self.dyn_button())
         # self.addButton("export_weight",icon="exportSmoothSkin.png",command=lambda :self.export_weight_button())
-        # self.addButton("copy_weight",icon="copySkinWeight.png",command=lambda :self.copy_weight_button())
+        self.addButton("copy_weight",icon="copySkinWeight.png",command=lambda :self.copy_weight_button())
         self.addButton("eye",icon="eye.png",command=lambda:self.eye_button())
 
     def share_button(self):
@@ -102,43 +102,43 @@ class Toolshelf(Shelf):
     #     # Import SkinWeight  #导入skinCluster权重
     #     # Batch Export SKinWeight  #选中多个物体批量导出权重
     #     # Batch Import SkinWeight  #从文件夹中导入多个物体权重
-    # def copy_weight_button(self):
-    #     import maya.mel as mel 
-    #     mel.eval(r'''
-    #     global proc kk_copyWeightFromOneToManyUI()
-    #     {
-    #         if(`window -ex kk_copyWeightFromOneToMany_Win`)
-    #             deleteUI kk_copyWeightFromOneToMany_Win;
-    #         window kk_copyWeightFromOneToMany_Win;
-    #         columnLayout -adj 1;
-    #         textFieldButtonGrp -cw3 50 100 100 -l "source" -ed 0 -tx "" -bl "road" -bc kk_copyWeightFromOneToMany_road kk_copyWeightFromOneToMany_TFBG;
-    #         button -l "copy" -c kk_copyWeightFromOneToMany;
-    #         showWindow kk_copyWeightFromOneToMany_Win;
-    #     }
-    #     kk_copyWeightFromOneToManyUI;
-    #     global proc kk_copyWeightFromOneToMany_road()
-    #     {
-    #         $sl=`ls -sl`;
-    #         textFieldButtonGrp -e -tx $sl[0] kk_copyWeightFromOneToMany_TFBG;
-    #     }
-    #     global proc kk_copyWeightFromOneToMany()
-    #     {
-    #         $mesh=`textFieldButtonGrp -q -tx kk_copyWeightFromOneToMany_TFBG`;
-    #         $skinNode=`findRelatedSkinCluster($mesh)`;
-    #         for($each in `ls -sl`)
-    #         {
-    #             $sn=`findRelatedSkinCluster($each)`;
-    #             if ($sn == "")
-    #                 {
-    #                 $jntList = `skinCluster -query -influence $skinNode`;  
-    #                 $newSn = `skinCluster -tsb $jntList $each`;
-    #                 copySkinWeights -ss $skinNode -ds $newSn -noMirror -surfaceAssociation closestPoint -influenceAssociation closestJoint;
-    #                 }
-    #             else 
-    #                 copySkinWeights -ss $skinNode -ds $sn -noMirror -surfaceAssociation closestPoint -influenceAssociation closestJoint;
-    #         }
-    #     }
-    #     ''')
+    def copy_weight_button(self):
+        import maya.mel as mel 
+        mel.eval(r'''
+        global proc kk_copyWeightFromOneToManyUI()
+        {
+            if(`window -ex kk_copyWeightFromOneToMany_Win`)
+                deleteUI kk_copyWeightFromOneToMany_Win;
+            window kk_copyWeightFromOneToMany_Win;
+            columnLayout -adj 1;
+            textFieldButtonGrp -cw3 50 100 100 -l "source" -ed 0 -tx "" -bl "road" -bc kk_copyWeightFromOneToMany_road kk_copyWeightFromOneToMany_TFBG;
+            button -l "copy" -c kk_copyWeightFromOneToMany;
+            showWindow kk_copyWeightFromOneToMany_Win;
+        }
+        kk_copyWeightFromOneToManyUI;
+        global proc kk_copyWeightFromOneToMany_road()
+        {
+            $sl=`ls -sl`;
+            textFieldButtonGrp -e -tx $sl[0] kk_copyWeightFromOneToMany_TFBG;
+        }
+        global proc kk_copyWeightFromOneToMany()
+        {
+            $mesh=`textFieldButtonGrp -q -tx kk_copyWeightFromOneToMany_TFBG`;
+            $skinNode=`findRelatedSkinCluster($mesh)`;
+            for($each in `ls -sl`)
+            {
+                $sn=`findRelatedSkinCluster($each)`;
+                if ($sn == "")
+                    {
+                    $jntList = `skinCluster -query -influence $skinNode`;  
+                    $newSn = `skinCluster -tsb $jntList $each`;
+                    copySkinWeights -ss $skinNode -ds $newSn -noMirror -surfaceAssociation closestPoint -influenceAssociation closestJoint;
+                    }
+                else 
+                    copySkinWeights -ss $skinNode -ds $sn -noMirror -surfaceAssociation closestPoint -influenceAssociation closestJoint;
+            }
+        }
+        ''')
     def eye_button(self):
         import sys
         import os
@@ -151,25 +151,6 @@ class Toolshelf(Shelf):
 Toolshelf.deleteSelf()     
 Toolshelf()
         
-
-
-
-
-
-    
-    
-
-
-
-
-
-    
-    
-
-
-
-
-    
     
 
         )"};
