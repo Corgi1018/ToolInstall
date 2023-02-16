@@ -2,7 +2,7 @@
     // "cmake.configureSettings": {
     //     "CMAKE_TOOLCHAIN_FILE":"E:/vcpkg/scripts/buildsystems/vcpkg.cmake"
     // },
-    "C_Cpp.intelliSenseEngine": "default",
+    "C_Cpp.intelliSenseEngine": "Disabled",
     "files.associations": {
         "algorithm": "cpp",
         "atomic": "cpp",
